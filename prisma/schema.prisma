@@ -55,6 +55,7 @@ model SkillCategory {
 model Skill {
   id         Int           @id @default(autoincrement())
   name       String
+  icon       String?
   categoryId Int
   category   SkillCategory @relation(fields: [categoryId], references: [id], onDelete: Cascade)
   order      Int           @default(0)
@@ -84,4 +85,23 @@ model AdminLoginCode {
   createdAt   DateTime  @default(now())
 
   @@map("admin_login_codes")
+}
+
+model SiteContent {
+  id              Int      @id @default(autoincrement())
+  heroTitle       String
+  heroHeading     String   @db.Text
+  heroSubheading  String   @db.Text
+  heroBio         String   @db.Text
+  aboutParagraph1 String   @db.Text
+  aboutParagraph2 String   @db.Text
+  aboutParagraph3 String   @db.Text
+  location        String
+  education       String
+  favouriteStack  String
+  currentlyVibing String
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  @@map("site_content")
 }

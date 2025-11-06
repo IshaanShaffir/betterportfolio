@@ -5,6 +5,7 @@ import { useInView } from "framer-motion";
 import { useRef, useState, useEffect } from "react";
 import { HiCalendar, HiBriefcase } from "react-icons/hi";
 import { FiEdit2, FiTrash2, FiPlus } from "react-icons/fi";
+import { getSkillIcon } from "@/lib/skillIcons";
 
 const fadeInUp = {
   hidden: { opacity: 0, y: 30 },
@@ -23,6 +24,7 @@ interface Skill {
   name: string;
   categoryId: number;
   order: number;
+  icon?: string | null;
 }
 
 interface Experience {
@@ -166,14 +168,18 @@ export default function Experience() {
                         {category.name}
                       </h4>
                       <div className="flex flex-wrap gap-2">
-                        {category.skills.map((skill) => (
-                          <span
-                            key={skill.id}
-                            className="px-3 py-1.5 bg-light-elevated dark:bg-dark-elevated text-gray-700 dark:text-gray-300 text-sm rounded-lg border border-light-border dark:border-dark-border hover:border-accent-cyan/50 hover:text-accent-cyan transition-all duration-200"
-                          >
-                            {skill.name}
-                          </span>
-                        ))}
+                        {category.skills.map((skill) => {
+                          const SkillIcon = getSkillIcon(skill.name, skill.icon ?? undefined);
+                          return (
+                            <span
+                              key={skill.id}
+                              className="px-3 py-1.5 bg-light-elevated dark:bg-dark-elevated text-gray-700 dark:text-gray-300 text-sm rounded-lg border border-light-border dark:border-dark-border hover:border-accent-cyan/50 hover:text-accent-cyan transition-all duration-200 flex items-center gap-2"
+                            >
+                              <SkillIcon className="w-4 h-4" />
+                              {skill.name}
+                            </span>
+                          );
+                        })}
                       </div>
                     </motion.div>
                   ))}

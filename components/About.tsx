@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import { useInView } from "framer-motion";
-import { useRef } from "react";
+import { useRef, useState, useEffect } from "react";
 import {
   HiLocationMarker,
   HiAcademicCap,
@@ -15,32 +15,47 @@ const fadeInUp = {
   visible: { opacity: 1, y: 0 },
 };
 
-const quickFacts = [
-  {
-    icon: <HiLocationMarker size={24} />,
-    label: "Location",
-    value: "Kelowna, BC",
-  },
-  {
-    icon: <HiAcademicCap size={24} />,
-    label: "Education",
-    value: "BSc Computer Science",
-  },
-  {
-    icon: <HiCode size={24} />,
-    label: "Favorite Stack",
-    value: "React · Flask · Firebase",
-  },
-  {
-    icon: <HiLightningBolt size={24} />,
-    label: "Currently Vibing",
-    value: "AI APIs & Game Dev",
-  },
-];
-
 export default function About() {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
+  const [content, setContent] = useState<any>(null);
+
+  useEffect(() => {
+    fetchContent();
+  }, []);
+
+  const fetchContent = async () => {
+    try {
+      const res = await fetch("/api/content");
+      const data = await res.json();
+      setContent(data);
+    } catch (error) {
+      console.error("Error fetching content:", error);
+    }
+  };
+
+  const quickFacts = [
+    {
+      icon: <HiLocationMarker size={24} />,
+      label: "Location",
+      value: content?.location || "Kelowna, BC",
+    },
+    {
+      icon: <HiAcademicCap size={24} />,
+      label: "Education",
+      value: content?.education || "BSc Computer Science",
+    },
+    {
+      icon: <HiCode size={24} />,
+      label: "Favorite Stack",
+      value: content?.favouriteStack || "React · Flask · Firebase",
+    },
+    {
+      icon: <HiLightningBolt size={24} />,
+      label: "Currently Vibing",
+      value: content?.currentlyVibing || "AI APIs & Game Dev",
+    },
+  ];
 
   return (
     <section
@@ -70,28 +85,16 @@ export default function About() {
               className="lg:col-span-2 space-y-4 text-gray-600 dark:text-gray-400 text-lg leading-relaxed"
             >
               <p>
-                Hey! I'm a Computer Science student at UBC Okanagan who
-                genuinely enjoys the process of building things—whether it's a
-                full-stack web app, a 3D game in Unity, or a Chrome extension
-                that makes studying less painful. There's something satisfying
-                about taking a vague idea and turning it into something that
-                actually works.
+                {content?.aboutParagraph1 ||
+                  "Hey! I'm a Computer Science student at UBC Okanagan who genuinely enjoys the process of building things—whether it's a full-stack web app, a 3D game in Unity, or a Chrome extension that makes studying less painful. There's something satisfying about taking a vague idea and turning it into something that actually works."}
               </p>
               <p>
-                When I'm not debugging code or wrestling with APIs, you'll
-                probably find me exploring new tech, trying out the latest
-                frameworks, or diving into a side project just because it sounds
-                interesting. I'm the kind of person who starts building
-                something "just to see if it's possible" and ends up with a full
-                project at 2 AM.
+                {content?.aboutParagraph2 ||
+                  "When I'm not debugging code or wrestling with APIs, you'll probably find me exploring new tech, trying out the latest frameworks, or diving into a side project just because it sounds interesting. I'm the kind of person who starts building something \"just to see if it's possible\" and ends up with a full project at 2 AM."}
               </p>
               <p>
-                I'm a big believer in learning by doing. Whether it's
-                experimenting with AI APIs, picking up a new programming
-                language, or figuring out how to deploy something I built to the
-                cloud—I'm always tinkering. If you want to chat about tech,
-                collaborate on something cool, or just talk about what you're
-                building, I'm all ears!
+                {content?.aboutParagraph3 ||
+                  "I'm a big believer in learning by doing. Whether it's experimenting with AI APIs, picking up a new programming language, or figuring out how to deploy something I built to the cloud—I'm always tinkering. If you want to chat about tech, collaborate on something cool, or just talk about what you're building, I'm all ears!"}
               </p>
             </motion.div>
 

@@ -18,12 +18,24 @@ export default function Hero() {
   const [isAdmin, setIsAdmin] = useState(false);
   const [isFocused, setIsFocused] = useState(false);
   const [isMinimized, setIsMinimized] = useState(true);
+  const [content, setContent] = useState<any>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const router = useRouter();
 
   useEffect(() => {
     checkAdminStatus();
+    fetchContent();
   }, []);
+
+  const fetchContent = async () => {
+    try {
+      const res = await fetch("/api/content");
+      const data = await res.json();
+      setContent(data);
+    } catch (error) {
+      console.error("Error fetching content:", error);
+    }
+  };
 
   const checkAdminStatus = async () => {
     try {
@@ -186,13 +198,14 @@ export default function Hero() {
           >
             <motion.div variants={fadeIn} transition={{ duration: 0.5 }}>
               <p className="text-accent-cyan font-mono text-sm mb-2">
-                Full-Stack Developer · CS Student
+                {content?.heroTitle || "Full-Stack Developer · CS Student"}
               </p>
               <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-gray-900 dark:text-white leading-tight">
-                Hi, I'm Ishaan.
+                {content?.heroHeading || "Hi, I'm Ishaan."}
                 <br />
                 <span className="text-gray-600 dark:text-gray-300">
-                  I build practical, thoughtful web experiences.
+                  {content?.heroSubheading ||
+                    "I build practical, thoughtful web experiences."}
                 </span>
               </h1>
             </motion.div>
@@ -202,10 +215,8 @@ export default function Hero() {
               transition={{ duration: 0.5, delay: 0.1 }}
               className="text-gray-600 dark:text-gray-400 text-lg leading-relaxed max-w-xl"
             >
-              I'm a Computer Science student at UBC Okanagan passionate about
-              full-stack development and building systems that solve real
-              problems. From exam analysis tools to weather dashboards and
-              e-commerce platforms, I enjoy bringing ideas to life through code.
+              {content?.heroBio ||
+                "I'm a Computer Science student at UBC Okanagan passionate about full-stack development and building systems that solve real problems. From exam analysis tools to weather dashboards and e-commerce platforms, I enjoy bringing ideas to life through code."}
             </motion.p>
 
             <motion.div
@@ -303,7 +314,7 @@ export default function Hero() {
                     <div className="flex items-center gap-2 mb-3">
                       <div className="flex gap-1.5">
                         <div className="w-3 h-3 rounded-full bg-red-500" />
-                        <div 
+                        <div
                           className="w-3 h-3 rounded-full bg-yellow-500 cursor-pointer hover:brightness-110"
                           onClick={(e) => {
                             e.stopPropagation();

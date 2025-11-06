@@ -101,7 +101,7 @@ function AdminContent() {
 
           {/* Tabs */}
           <div className="flex gap-2 mt-6">
-            {["projects", "experience", "skills", "settings"].map((tab) => (
+            {["projects", "experience", "skills", "content", "settings"].map((tab) => (
               <button
                 key={tab}
                 onClick={() => {
@@ -126,6 +126,7 @@ function AdminContent() {
         {activeTab === "projects" && <ProjectsTab />}
         {activeTab === "experience" && <ExperienceTab />}
         {activeTab === "skills" && <SkillsTab />}
+        {activeTab === "content" && <ContentTab />}
         {activeTab === "settings" && <SettingsTab />}
       </main>
     </div>
@@ -1130,6 +1131,288 @@ function SkillForm({ skill, categoryId, categories, onSubmit, onCancel }: any) {
   );
 }
 
+// Content Tab Component
+function ContentTab() {
+  const [content, setContent] = useState<any>(null);
+  const [loading, setLoading] = useState(true);
+  const [saving, setSaving] = useState(false);
+  const [message, setMessage] = useState("");
+
+  useEffect(() => {
+    fetchContent();
+  }, []);
+
+  const fetchContent = async () => {
+    try {
+      const res = await fetch("/api/content", {
+        credentials: "include",
+      });
+      const data = await res.json();
+      setContent(data);
+    } catch (error) {
+      console.error("Error fetching content:", error);
+      setMessage("Failed to load content");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setSaving(true);
+    setMessage("");
+
+    try {
+      const res = await fetch("/api/content", {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+        body: JSON.stringify(content),
+      });
+
+      if (res.ok) {
+        setMessage("Content updated successfully!");
+        setTimeout(() => setMessage(""), 3000);
+      } else {
+        setMessage("Failed to update content");
+      }
+    } catch (error) {
+      console.error("Error updating content:", error);
+      setMessage("Failed to update content");
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center py-12">
+        <div className="text-gray-600 dark:text-gray-400">Loading...</div>
+      </div>
+    );
+  }
+
+  return (
+    <form
+      onSubmit={handleSubmit}
+      className="max-w-4xl bg-white dark:bg-dark-surface border border-light-border dark:border-dark-border rounded-lg p-6"
+    >
+      <div className="flex items-center justify-between mb-6">
+        <h2 className="text-xl font-bold text-gray-900 dark:text-white">
+          Site Content
+        </h2>
+        <button
+          type="submit"
+          disabled={saving}
+          className="flex items-center gap-2 px-4 py-2 bg-accent-cyan text-dark-bg rounded-lg hover:bg-accent-cyan-light transition-colors disabled:opacity-50"
+        >
+          <FiSave size={16} />
+          {saving ? "Saving..." : "Save Changes"}
+        </button>
+      </div>
+
+      {message && (
+        <div
+          className={`p-4 rounded-lg mb-6 ${
+            message.includes("success")
+              ? "bg-green-100 dark:bg-green-900/20 text-green-800 dark:text-green-300"
+              : "bg-red-100 dark:bg-red-900/20 text-red-800 dark:text-red-300"
+          }`}
+        >
+          {message}
+        </div>
+      )}
+
+      <div className="space-y-6">
+        {/* Hero Section */}
+        <div className="space-y-4">
+          <h3 className="text-lg font-semibold text-gray-900 dark:text-white border-b border-light-border dark:border-dark-border pb-2">
+            Hero Section
+          </h3>
+          
+          <div>
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+              Hero Title (small text above name)
+            </label>
+            <input
+              type="text"
+              value={content?.heroTitle || ""}
+              onChange={(e) =>
+                setContent({ ...content, heroTitle: e.target.value })
+              }
+              className="w-full px-4 py-2 bg-light-elevated dark:bg-dark-elevated border border-light-border dark:border-dark-border rounded-lg text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-accent-cyan"
+              placeholder="e.g., Full-Stack Developer · CS Student"
+            />
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+              Hero Heading (main name)
+            </label>
+            <input
+              type="text"
+              value={content?.heroHeading || ""}
+              onChange={(e) =>
+                setContent({ ...content, heroHeading: e.target.value })
+              }
+              className="w-full px-4 py-2 bg-light-elevated dark:bg-dark-elevated border border-light-border dark:border-dark-border rounded-lg text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-accent-cyan"
+              placeholder="e.g., Hi, I'm Ishaan."
+            />
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+              Hero Subheading
+            </label>
+            <input
+              type="text"
+              value={content?.heroSubheading || ""}
+              onChange={(e) =>
+                setContent({ ...content, heroSubheading: e.target.value })
+              }
+              className="w-full px-4 py-2 bg-light-elevated dark:bg-dark-elevated border border-light-border dark:border-dark-border rounded-lg text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-accent-cyan"
+              placeholder="e.g., I build practical, thoughtful web experiences."
+            />
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+              Hero Bio
+            </label>
+            <textarea
+              value={content?.heroBio || ""}
+              onChange={(e) =>
+                setContent({ ...content, heroBio: e.target.value })
+              }
+              rows={4}
+              className="w-full px-4 py-2 bg-light-elevated dark:bg-dark-elevated border border-light-border dark:border-dark-border rounded-lg text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-accent-cyan"
+              placeholder="Introduce yourself..."
+            />
+          </div>
+        </div>
+
+        {/* About Section */}
+        <div className="space-y-4">
+          <h3 className="text-lg font-semibold text-gray-900 dark:text-white border-b border-light-border dark:border-dark-border pb-2">
+            About Section
+          </h3>
+
+          <div>
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+              About Paragraph 1
+            </label>
+            <textarea
+              value={content?.aboutParagraph1 || ""}
+              onChange={(e) =>
+                setContent({ ...content, aboutParagraph1: e.target.value })
+              }
+              rows={3}
+              className="w-full px-4 py-2 bg-light-elevated dark:bg-dark-elevated border border-light-border dark:border-dark-border rounded-lg text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-accent-cyan"
+            />
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+              About Paragraph 2
+            </label>
+            <textarea
+              value={content?.aboutParagraph2 || ""}
+              onChange={(e) =>
+                setContent({ ...content, aboutParagraph2: e.target.value })
+              }
+              rows={3}
+              className="w-full px-4 py-2 bg-light-elevated dark:bg-dark-elevated border border-light-border dark:border-dark-border rounded-lg text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-accent-cyan"
+            />
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+              About Paragraph 3
+            </label>
+            <textarea
+              value={content?.aboutParagraph3 || ""}
+              onChange={(e) =>
+                setContent({ ...content, aboutParagraph3: e.target.value })
+              }
+              rows={3}
+              className="w-full px-4 py-2 bg-light-elevated dark:bg-dark-elevated border border-light-border dark:border-dark-border rounded-lg text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-accent-cyan"
+            />
+          </div>
+        </div>
+
+        {/* Quick Facts */}
+        <div className="space-y-4">
+          <h3 className="text-lg font-semibold text-gray-900 dark:text-white border-b border-light-border dark:border-dark-border pb-2">
+            Quick Facts
+          </h3>
+
+          <div className="grid md:grid-cols-2 gap-4">
+            <div>
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                Location
+              </label>
+              <input
+                type="text"
+                value={content?.location || ""}
+                onChange={(e) =>
+                  setContent({ ...content, location: e.target.value })
+                }
+                className="w-full px-4 py-2 bg-light-elevated dark:bg-dark-elevated border border-light-border dark:border-dark-border rounded-lg text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-accent-cyan"
+                placeholder="e.g., Kelowna, BC"
+              />
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                Education
+              </label>
+              <input
+                type="text"
+                value={content?.education || ""}
+                onChange={(e) =>
+                  setContent({ ...content, education: e.target.value })
+                }
+                className="w-full px-4 py-2 bg-light-elevated dark:bg-dark-elevated border border-light-border dark:border-dark-border rounded-lg text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-accent-cyan"
+                placeholder="e.g., BSc Computer Science"
+              />
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                Favourite Stack
+              </label>
+              <input
+                type="text"
+                value={content?.favouriteStack || ""}
+                onChange={(e) =>
+                  setContent({ ...content, favouriteStack: e.target.value })
+                }
+                className="w-full px-4 py-2 bg-light-elevated dark:bg-dark-elevated border border-light-border dark:border-dark-border rounded-lg text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-accent-cyan"
+                placeholder="e.g., React · Flask · Firebase"
+              />
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                Currently Vibing
+              </label>
+              <input
+                type="text"
+                value={content?.currentlyVibing || ""}
+                onChange={(e) =>
+                  setContent({ ...content, currentlyVibing: e.target.value })
+                }
+                className="w-full px-4 py-2 bg-light-elevated dark:bg-dark-elevated border border-light-border dark:border-dark-border rounded-lg text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-accent-cyan"
+                placeholder="e.g., AI APIs & Game Dev"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  );
+}
+
 // Settings Tab Component
 function SettingsTab() {
   const [resumeFile, setResumeFile] = useState<File | null>(null);
@@ -1187,7 +1470,9 @@ function SettingsTab() {
       const data = await res.json();
 
       if (res.ok) {
-        setMessage("✓ Profile image updated successfully! Refresh to see changes.");
+        setMessage(
+          "✓ Profile image updated successfully! Refresh to see changes."
+        );
         setImageFile(null);
       } else {
         setMessage("✗ " + (data.error || "Upload failed"));
@@ -1265,7 +1550,8 @@ function SettingsTab() {
               className="block w-full text-sm text-gray-900 dark:text-white border border-light-border dark:border-dark-border rounded-lg cursor-pointer bg-light-elevated dark:bg-dark-elevated focus:outline-none"
             />
             <p className="mt-1 text-xs text-gray-500">
-              JPG, PNG, or WebP. Square images work best. Will be named profile.[ext]
+              JPG, PNG, or WebP. Square images work best. Will be named
+              profile.[ext]
             </p>
           </div>
           {imageFile && (
