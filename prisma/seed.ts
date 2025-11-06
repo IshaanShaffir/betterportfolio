@@ -82,11 +82,20 @@ async function main() {
   ];
 
   for (const project of projects) {
-    await prisma.project.upsert({
-      where: { id: projects.indexOf(project) + 1 },
-      update: project,
-      create: project,
+    const existing = await prisma.project.findFirst({
+      where: { title: project.title },
     });
+    
+    if (existing) {
+      await prisma.project.update({
+        where: { id: existing.id },
+        data: project,
+      });
+    } else {
+      await prisma.project.create({
+        data: project,
+      });
+    }
   }
   console.log('✅ Projects seeded');
 
@@ -132,11 +141,23 @@ async function main() {
   ];
 
   for (const exp of experiences) {
-    await prisma.experience.upsert({
-      where: { id: experiences.indexOf(exp) + 1 },
-      update: exp,
-      create: exp,
+    const existing = await prisma.experience.findFirst({
+      where: { 
+        company: exp.company,
+        role: exp.role,
+      },
     });
+    
+    if (existing) {
+      await prisma.experience.update({
+        where: { id: existing.id },
+        data: exp,
+      });
+    } else {
+      await prisma.experience.create({
+        data: exp,
+      });
+    }
   }
   console.log('✅ Experiences seeded');
 
@@ -151,19 +172,43 @@ async function main() {
 
   let categoryOrder = 1;
   for (const [categoryName, skills] of Object.entries(skillsData)) {
-    const category = await prisma.skillCategory.upsert({
-      where: { id: categoryOrder },
-      update: { name: categoryName, order: categoryOrder },
-      create: { name: categoryName, order: categoryOrder },
+    const category = await prisma.skillCategory.findFirst({
+      where: { name: categoryName },
     });
+
+    let categoryId: number;
+    if (category) {
+      await prisma.skillCategory.update({
+        where: { id: category.id },
+        data: { order: categoryOrder },
+      });
+      categoryId = category.id;
+    } else {
+      const newCategory = await prisma.skillCategory.create({
+        data: { name: categoryName, order: categoryOrder },
+      });
+      categoryId = newCategory.id;
+    }
 
     let skillOrder = 1;
     for (const skillName of skills) {
-      await prisma.skill.upsert({
-        where: { id: (categoryOrder - 1) * 20 + skillOrder },
-        update: { name: skillName, categoryId: category.id, order: skillOrder },
-        create: { name: skillName, categoryId: category.id, order: skillOrder },
+      const existingSkill = await prisma.skill.findFirst({
+        where: { 
+          name: skillName,
+          categoryId: categoryId,
+        },
       });
+
+      if (existingSkill) {
+        await prisma.skill.update({
+          where: { id: existingSkill.id },
+          data: { order: skillOrder },
+        });
+      } else {
+        await prisma.skill.create({
+          data: { name: skillName, categoryId: categoryId, order: skillOrder },
+        });
+      }
       skillOrder++;
     }
     categoryOrder++;

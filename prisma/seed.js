@@ -84,7 +84,13 @@ async function main() {
     const existing = await prisma.project.findFirst({
       where: { title: project.title },
     });
-    if (!existing) {
+    
+    if (existing) {
+      await prisma.project.update({
+        where: { id: existing.id },
+        data: project,
+      });
+    } else {
       await prisma.project.create({ data: project });
     }
   }
@@ -138,7 +144,13 @@ async function main() {
         company: experience.company,
       },
     });
-    if (!existing) {
+    
+    if (existing) {
+      await prisma.experience.update({
+        where: { id: existing.id },
+        data: experience,
+      });
+    } else {
       await prisma.experience.create({ data: experience });
     }
   }
@@ -179,7 +191,12 @@ async function main() {
       where: { name: category.name },
     });
     
-    if (!createdCategory) {
+    if (createdCategory) {
+      await prisma.skillCategory.update({
+        where: { id: createdCategory.id },
+        data: categoryData,
+      });
+    } else {
       createdCategory = await prisma.skillCategory.create({
         data: categoryData,
       });
@@ -192,7 +209,13 @@ async function main() {
           categoryId: createdCategory.id,
         },
       });
-      if (!existingSkill) {
+      
+      if (existingSkill) {
+        await prisma.skill.update({
+          where: { id: existingSkill.id },
+          data: { order: i },
+        });
+      } else {
         await prisma.skill.create({
           data: {
             name: skills[i],
