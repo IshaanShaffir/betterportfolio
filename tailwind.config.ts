@@ -6,8 +6,33 @@ const config: Config = {
     "./components/**/*.{js,ts,jsx,tsx,mdx}",
     "./app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
+  darkMode: 'class',
   theme: {
     extend: {
+      colors: {
+        dark: {
+          bg: '#0a0a0f',
+          surface: '#13131a',
+          elevated: '#1a1a24',
+          border: '#2a2a35',
+        },
+        light: {
+          bg: '#f5f5f7',
+          surface: '#ffffff',
+          elevated: '#f9f9fb',
+          border: '#e5e5e7',
+        },
+        accent: {
+          cyan: '#06b6d4',
+          'cyan-light': '#22d3ee',
+          purple: '#a855f7',
+          'purple-light': '#c084fc',
+        },
+      },
+      fontFamily: {
+        sans: ['Inter', 'system-ui', 'sans-serif'],
+        mono: ['JetBrains Mono', 'Consolas', 'monospace'],
+      },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
         "gradient-conic":

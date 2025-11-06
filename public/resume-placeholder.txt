@@ -1,0 +1,9 @@
+# Resume Placeholder
+
+This is a placeholder file for the resume. Replace this PDF with your actual resume.
+
+To add your resume:
+1. Create or export your resume as a PDF file
+2. Name it `resume.pdf`
+3. Place it in the `/public` folder
+4. The download link will work automatically

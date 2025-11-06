@@ -1,0 +1,218 @@
+const { PrismaClient } = require('@prisma/client');
+const prisma = new PrismaClient();
+
+async function main() {
+  console.log('🌱 Seeding database...');
+
+  // Create admin user
+  const adminEmail = process.env.ADMIN_EMAIL || 'ishaanshaffir@gmail.com';
+  await prisma.adminUser.upsert({
+    where: { email: adminEmail },
+    update: {},
+    create: { email: adminEmail },
+  });
+  console.log(`✅ Admin user created: ${adminEmail}`);
+
+  // Seed Projects
+  const projects = [
+    {
+      title: 'ExamGen - Exam Analysis System',
+      description: 'Full-stack exam analysis system with automatic OMR processing and analytics. Reduced grading time by 70% through data validation scripts and REST APIs with JWT authentication.',
+      techStack: ['Flask', 'React', 'MySQL', 'Tailwind', 'Python'],
+      githubUrl: 'https://github.com/IshaanShaffir/ExamGen-Capstone',
+      liveUrl: null,
+      featured: true,
+      order: 1,
+    },
+    {
+      title: 'SlideSnap AI',
+      description: 'Chrome extension that automatically summarizes Canvas lecture slides using Google Gemini AI. Extracts key terms, generates practice questions, and provides PDF text extraction with PDF.js.',
+      techStack: ['JavaScript', 'Gemini API', 'Chrome Extension', 'PDF.js'],
+      githubUrl: 'https://github.com/IshaanShaffir/SlideSnap--Canvas-Extension',
+      liveUrl: null,
+      featured: true,
+      order: 2,
+    },
+    {
+      title: 'Dynamic Portfolio Website',
+      description: 'Modern full-stack portfolio with admin dashboard for real-time content management. Features 2FA email authentication, dark mode, Docker deployment, and PostgreSQL database with Prisma ORM.',
+      techStack: ['Next.js', 'TypeScript', 'Prisma', 'PostgreSQL', 'Docker', 'Tailwind CSS'],
+      githubUrl: 'https://github.com/IshaanShaffir/betterportfolio',
+      liveUrl: null,
+      featured: true,
+      order: 3,
+    },
+    {
+      title: 'PEWPEWPANIC!',
+      description: 'A 3D space shooter built in Unity with C#—a modern 3D reimagining of Space Invaders. Features 10 handcrafted levels, diverse enemy AI with unique movement patterns, power-ups, and an epic boss battle.',
+      techStack: ['Unity', 'C#', 'Game Design', '3D'],
+      githubUrl: 'https://github.com/IshaanShaffir/PewPewPanic',
+      liveUrl: 'https://ishaanshaffir.itch.io/pewpewpanic',
+      featured: false,
+      order: 4,
+    },
+    {
+      title: 'ToolPool',
+      description: 'Android app for community tool sharing with authentication, listings, chat, and image uploads. Built with Firebase for real-time updates and optimized UI with XML layouts.',
+      techStack: ['Java', 'Firebase', 'Firestore', 'Android'],
+      githubUrl: 'https://github.com/IshaanShaffir/ToolPool',
+      liveUrl: null,
+      featured: false,
+      order: 5,
+    },
+    {
+      title: 'WeatherCast',
+      description: 'Personalized weather dashboard using OpenWeather API and geolocation. Managed with Agile sprints and collaborative GitHub workflow for feature delivery.',
+      techStack: ['Flask', 'SQLite', 'JavaScript', 'CSS'],
+      githubUrl: 'https://github.com/IshaanShaffir/COSC-310-WeatherCast-WeatherWebApp',
+      liveUrl: null,
+      featured: false,
+      order: 6,
+    },
+    {
+      title: 'Online Shopping Website',
+      description: 'E-commerce platform with admin dashboard, product management, and secure checkout. Deployed on cloud infrastructure with optimized queries for performance.',
+      techStack: ['JSP', 'SQL Server', 'DigitalOcean'],
+      githubUrl: 'https://github.com/IshaanShaffir/COSC-304-Project-OnlineShoppingWebsite',
+      liveUrl: null,
+      featured: false,
+      order: 7,
+    },
+  ];
+
+  for (const project of projects) {
+    const existing = await prisma.project.findFirst({
+      where: { title: project.title },
+    });
+    if (!existing) {
+      await prisma.project.create({ data: project });
+    }
+  }
+  console.log('✅ Projects seeded');
+
+  // Seed Experiences
+  const experiences = [
+    {
+      role: 'Marketing & Data Management Intern',
+      company: 'ThoughtsWin Systems',
+      location: 'Surrey, BC',
+      startDate: new Date('2023-09-01'),
+      endDate: new Date('2023-12-31'),
+      bullets: [
+        'Verified and standardized large client datasets to ensure accuracy and consistency for migration',
+        'Performed one-to-one file naming validation and metadata checks to maintain data integrity',
+        'Collaborated with the technical team to resolve data discrepancies and streamline validation processes',
+      ],
+      order: 1,
+    },
+    {
+      role: 'Student Orientation Leader',
+      company: 'UBC Okanagan',
+      location: 'Kelowna, BC',
+      startDate: new Date('2025-08-01'),
+      endDate: new Date('2025-09-30'),
+      bullets: [
+        'Supported onboarding of 300+ new students, facilitating events and guiding academic transitions',
+        'Demonstrated leadership, communication, and teamwork in a high-responsibility campus role',
+      ],
+      order: 2,
+    },
+    {
+      role: 'Retail Associate',
+      company: 'Mountain Equipment Company (MEC)',
+      location: 'Surrey, BC',
+      startDate: new Date('2025-06-01'),
+      endDate: null,
+      bullets: [
+        'Delivered excellent customer service and maintained product accuracy in fast-paced retail settings',
+        'Collaborated with team members to meet daily sales and operational goals',
+      ],
+      order: 3,
+    },
+  ];
+
+  for (const experience of experiences) {
+    const existing = await prisma.experience.findFirst({
+      where: {
+        role: experience.role,
+        company: experience.company,
+      },
+    });
+    if (!existing) {
+      await prisma.experience.create({ data: experience });
+    }
+  }
+  console.log('✅ Experiences seeded');
+
+  // Seed Skill Categories and Skills
+  const skillCategories = [
+    {
+      name: 'Languages',
+      order: 1,
+      skills: ['Java', 'Python', 'JavaScript', 'C#', 'Kotlin', 'C++'],
+    },
+    {
+      name: 'Frameworks & Tools',
+      order: 2,
+      skills: ['Flask', 'React', 'Firebase', 'Docker', 'Git', 'Tailwind', 'JSP'],
+    },
+    {
+      name: 'Cloud & DevOps',
+      order: 3,
+      skills: ['AWS', 'CI/CD', 'RESTful APIs', 'Agile'],
+    },
+    {
+      name: 'Databases',
+      order: 4,
+      skills: ['MySQL', 'SQL Server', 'SQLite', 'Firestore'],
+    },
+    {
+      name: 'Concepts',
+      order: 5,
+      skills: ['OOP', 'Data Structures', 'Algorithms', 'SDLC', 'JWT Auth'],
+    },
+  ];
+
+  for (const category of skillCategories) {
+    const { skills, ...categoryData } = category;
+    let createdCategory = await prisma.skillCategory.findFirst({
+      where: { name: category.name },
+    });
+    
+    if (!createdCategory) {
+      createdCategory = await prisma.skillCategory.create({
+        data: categoryData,
+      });
+    }
+
+    for (let i = 0; i < skills.length; i++) {
+      const existingSkill = await prisma.skill.findFirst({
+        where: {
+          name: skills[i],
+          categoryId: createdCategory.id,
+        },
+      });
+      if (!existingSkill) {
+        await prisma.skill.create({
+          data: {
+            name: skills[i],
+            categoryId: createdCategory.id,
+            order: i,
+          },
+        });
+      }
+    }
+  }
+  console.log('✅ Skills seeded');
+
+  console.log('🎉 Seeding completed!');
+}
+
+main()
+  .catch((e) => {
+    console.error(e);
+    process.exit(1);
+  })
+  .finally(async () => {
+    await prisma.$disconnect();
+  });
