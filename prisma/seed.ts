@@ -35,13 +35,22 @@ async function main() {
       order: 2,
     },
     {
+      title: 'WeatherCast',
+      description: 'Personalized weather dashboard using OpenWeather API and geolocation. Managed with Agile sprints and collaborative GitHub workflow for feature delivery.',
+      techStack: ['Java', 'Next.js', 'TypeScript', 'Spring Boot', 'PostgreSQL'],
+      githubUrl: 'https://github.com/IshaanShaffir/COSC-310-WeatherCast-WeatherWebApp',
+      liveUrl: 'https://weathercast-demo.vercel.app',
+      featured: true,
+      order: 3,
+    },
+    {
       title: 'Dynamic Portfolio Website',
       description: 'Modern full-stack portfolio with admin dashboard for real-time content management. Features 2FA email authentication, dark mode, Docker deployment, and PostgreSQL database with Prisma ORM.',
       techStack: ['Next.js', 'TypeScript', 'Prisma', 'PostgreSQL', 'Docker', 'Tailwind CSS'],
       githubUrl: 'https://github.com/IshaanShaffir/betterportfolio',
       liveUrl: null,
       featured: true,
-      order: 3,
+      order: 4,
     },
     {
       title: 'PEWPEWPANIC!',
@@ -50,22 +59,13 @@ async function main() {
       githubUrl: 'https://github.com/IshaanShaffir/PewPewPanic',
       liveUrl: 'https://ishaanshaffir.itch.io/pewpewpanic',
       featured: false,
-      order: 4,
+      order: 5,
     },
     {
       title: 'ToolPool',
       description: 'Android app for community tool sharing with authentication, listings, chat, and image uploads. Built with Firebase for real-time updates and optimized UI with XML layouts.',
       techStack: ['Java', 'Firebase', 'Firestore', 'Android'],
       githubUrl: 'https://github.com/IshaanShaffir/ToolPool',
-      liveUrl: null,
-      featured: false,
-      order: 5,
-    },
-    {
-      title: 'WeatherCast',
-      description: 'Personalized weather dashboard using OpenWeather API and geolocation. Managed with Agile sprints and collaborative GitHub workflow for feature delivery.',
-      techStack: ['Flask', 'SQLite', 'JavaScript', 'CSS'],
-      githubUrl: 'https://github.com/IshaanShaffir/COSC-310-WeatherCast-WeatherWebApp',
       liveUrl: null,
       featured: false,
       order: 6,
@@ -163,11 +163,11 @@ async function main() {
 
   // Seed Skill Categories and Skills
   const skillsData = {
-    'Languages': ['Java', 'Python', 'JavaScript', 'C#', 'Kotlin', 'C++'],
-    'Frameworks & Tools': ['Flask', 'React', 'Firebase', 'Docker', 'Git', 'Tailwind', 'JSP'],
-    'Cloud & DevOps': ['AWS', 'CI/CD', 'RESTful APIs', 'Agile'],
-    'Databases': ['MySQL', 'SQL Server', 'SQLite', 'Firestore'],
-    'Concepts': ['OOP', 'Data Structures', 'Algorithms', 'SDLC', 'JWT Auth'],
+    'Languages': ['TypeScript', 'Java', 'Python', 'JavaScript', 'C#', 'Kotlin', 'C++'],
+    'Frameworks & Tools': ['Next.js', 'Spring Boot', 'Flask', 'React', 'Firebase', 'Docker', 'Git', 'Tailwind', 'JSP'],
+    'Cloud & DevOps': ['Vercel', 'Render', 'Neon', 'AWS', 'CI/CD', 'RESTful APIs', 'Agile'],
+    'Databases': ['PostgreSQL', 'MySQL', 'SQL Server', 'SQLite', 'Firestore'],
+    'Concepts': ['MVC Architecture', 'Microservices', 'OOP', 'Data Structures', 'Algorithms', 'SDLC', 'JWT Auth'],
   };
 
   let categoryOrder = 1;

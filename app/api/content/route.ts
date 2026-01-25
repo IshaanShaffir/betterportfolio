@@ -38,8 +38,9 @@ export async function GET() {
   }
 }
 
-// PUT /api/content - Update site content (requires authentication)
-export async function PUT(request: NextRequest) {
+// POST /api/content - Update site content (requires authentication)
+// Using POST instead of PUT for better compatibility with Next.js standalone mode
+export async function POST(request: NextRequest) {
   const authCheck = await requireAuth(request);
   if (authCheck instanceof NextResponse) return authCheck;
 

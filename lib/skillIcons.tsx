@@ -248,6 +248,8 @@ export const skillIconMap: Record<string, any> = {
   // Concepts (generic icons)
   oop: FaCode,
   "object-oriented programming": FaCode,
+  "mvc architecture": FaCogs,
+  mvc: FaCogs,
   "data structures": FaDatabase,
   algorithms: FaBrain,
   sdlc: FaCogs,
@@ -270,6 +272,10 @@ export const skillIconMap: Record<string, any> = {
   ai: FaBrain,
   "artificial intelligence": FaBrain,
   "deep learning": FaBrain,
+
+  // Cloud Platforms
+  render: FaCloud,
+  neon: FaDatabase,
 };
 
 // Helper function to get icon component by name

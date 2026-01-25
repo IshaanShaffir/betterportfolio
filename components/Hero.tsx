@@ -53,7 +53,7 @@ export default function Hero() {
   };
 
   const handleTerminalSubmit = async (
-    e: React.KeyboardEvent<HTMLInputElement>
+    e: React.KeyboardEvent<HTMLInputElement>,
   ) => {
     if (e.key !== "Enter") return;
 
@@ -348,12 +348,12 @@ export default function Hero() {
                             line.startsWith("✓")
                               ? "text-green-400"
                               : line.startsWith("✗")
-                              ? "text-red-400"
-                              : line.startsWith("$")
-                              ? "text-gray-500"
-                              : line.startsWith(">")
-                              ? "text-gray-500"
-                              : "text-gray-600 dark:text-gray-400"
+                                ? "text-red-400"
+                                : line.startsWith("$")
+                                  ? "text-gray-500"
+                                  : line.startsWith(">")
+                                    ? "text-gray-500"
+                                    : "text-gray-600 dark:text-gray-400"
                           }
                         >
                           {line}

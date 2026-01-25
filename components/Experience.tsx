@@ -169,7 +169,10 @@ export default function Experience() {
                       </h4>
                       <div className="flex flex-wrap gap-2">
                         {category.skills.map((skill) => {
-                          const SkillIcon = getSkillIcon(skill.name, skill.icon ?? undefined);
+                          const SkillIcon = getSkillIcon(
+                            skill.name,
+                            skill.icon ?? undefined,
+                          );
                           return (
                             <span
                               key={skill.id}

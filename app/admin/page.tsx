@@ -13,7 +13,7 @@ function AdminContent() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState(
-    searchParams.get("tab") || "projects"
+    searchParams.get("tab") || "projects",
   );
 
   useEffect(() => {
@@ -101,22 +101,24 @@ function AdminContent() {
 
           {/* Tabs */}
           <div className="flex gap-2 mt-6">
-            {["projects", "experience", "skills", "content", "settings"].map((tab) => (
-              <button
-                key={tab}
-                onClick={() => {
-                  setActiveTab(tab);
-                  router.push(`/admin?tab=${tab}`);
-                }}
-                className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
-                  activeTab === tab
-                    ? "bg-accent-cyan text-dark-bg"
-                    : "text-gray-600 dark:text-gray-400 hover:bg-light-elevated dark:hover:bg-dark-elevated"
-                }`}
-              >
-                {tab.charAt(0).toUpperCase() + tab.slice(1)}
-              </button>
-            ))}
+            {["projects", "experience", "skills", "content", "settings"].map(
+              (tab) => (
+                <button
+                  key={tab}
+                  onClick={() => {
+                    setActiveTab(tab);
+                    router.push(`/admin?tab=${tab}`);
+                  }}
+                  className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
+                    activeTab === tab
+                      ? "bg-accent-cyan text-dark-bg"
+                      : "text-gray-600 dark:text-gray-400 hover:bg-light-elevated dark:hover:bg-dark-elevated"
+                  }`}
+                >
+                  {tab.charAt(0).toUpperCase() + tab.slice(1)}
+                </button>
+              ),
+            )}
           </div>
         </div>
       </header>
@@ -803,7 +805,7 @@ function SkillsTab() {
   const [showCategoryForm, setShowCategoryForm] = useState(false);
   const [showSkillForm, setShowSkillForm] = useState(false);
   const [selectedCategoryId, setSelectedCategoryId] = useState<number | null>(
-    null
+    null,
   );
 
   useEffect(() => {
@@ -1164,7 +1166,7 @@ function ContentTab() {
 
     try {
       const res = await fetch("/api/content", {
-        method: "PUT",
+        method: "POST",
         headers: { "Content-Type": "application/json" },
         credentials: "include",
         body: JSON.stringify(content),
@@ -1229,7 +1231,7 @@ function ContentTab() {
           <h3 className="text-lg font-semibold text-gray-900 dark:text-white border-b border-light-border dark:border-dark-border pb-2">
             Hero Section
           </h3>
-          
+
           <div>
             <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
               Hero Title (small text above name)
@@ -1471,7 +1473,7 @@ function SettingsTab() {
 
       if (res.ok) {
         setMessage(
-          "✓ Profile image updated successfully! Refresh to see changes."
+          "✓ Profile image updated successfully! Refresh to see changes.",
         );
         setImageFile(null);
       } else {
