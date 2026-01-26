@@ -39,7 +39,7 @@ async function main() {
       description: 'Personalized weather dashboard using OpenWeather API and geolocation. Managed with Agile sprints and collaborative GitHub workflow for feature delivery.',
       techStack: ['Java', 'Next.js', 'TypeScript', 'Spring Boot', 'PostgreSQL'],
       githubUrl: 'https://github.com/IshaanShaffir/COSC-310-WeatherCast-WeatherWebApp',
-      liveUrl: 'https://weathercast-demo.vercel.app',
+      liveUrl: 'https://weather-cast-v2.vercel.app/',
       featured: true,
       order: 3,
     },

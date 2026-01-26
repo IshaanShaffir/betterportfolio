@@ -14,7 +14,7 @@ RUN npm ci --legacy-peer-deps --ignore-scripts
 
 # Generate Prisma Client manually with dummy DATABASE_URL
 ENV DATABASE_URL="postgresql://dummy:dummy@localhost:5432/dummy"
-RUN npx prisma generate
+RUN ./node_modules/.bin/prisma generate
 
 # Stage 2: Builder
 FROM node:20-alpine AS builder
@@ -24,7 +24,7 @@ COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 
 # Generate Prisma Client
-RUN npx prisma generate
+RUN ./node_modules/.bin/prisma generate
 
 # Build Next.js app
 ENV NEXT_TELEMETRY_DISABLED 1
@@ -48,6 +48,8 @@ COPY --from=builder /app/.next/static ./.next/static
 COPY --from=builder /app/prisma ./prisma
 COPY --from=builder /app/node_modules/.prisma ./node_modules/.prisma
 COPY --from=builder /app/node_modules/@prisma ./node_modules/@prisma
+COPY --from=builder /app/node_modules/prisma ./node_modules/prisma
+COPY --from=builder /app/node_modules/.bin/prisma ./node_modules/.bin/prisma
 
 # Copy entrypoint script
 COPY docker-entrypoint.sh ./
