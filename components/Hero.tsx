@@ -205,7 +205,7 @@ export default function Hero() {
                 <br />
                 <span className="text-gray-600 dark:text-gray-300">
                   {content?.heroSubheading ||
-                    "I build practical, thoughtful web experiences."}
+                    "I build practical, thoughtful experiences."}
                 </span>
               </h1>
             </motion.div>

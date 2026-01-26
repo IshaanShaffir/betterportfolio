@@ -15,7 +15,7 @@ export async function GET() {
         data: {
           heroTitle: 'Full-Stack Developer · CS Student',
           heroHeading: "Hi, I'm Ishaan.",
-          heroSubheading: 'I build practical, thoughtful web experiences.',
+          heroSubheading: 'I build practical, thoughtful experiences.',
           heroBio: "I'm a Computer Science student at UBC Okanagan passionate about full-stack development and building systems that solve real problems. From exam analysis tools to weather dashboards and e-commerce platforms, I enjoy bringing ideas to life through code.",
           aboutParagraph1: "Hey! I'm a Computer Science student at UBC Okanagan who genuinely enjoys the process of building things—whether it's a full-stack web app, a 3D game in Unity, or a Chrome extension that makes studying less painful. There's something satisfying about taking a vague idea and turning it into something that actually works.",
           aboutParagraph2: "When I'm not debugging code or wrestling with APIs, you'll probably find me exploring new tech, trying out the latest frameworks, or diving into a side project just because it sounds interesting. I'm the kind of person who starts building something \"just to see if it's possible\" and ends up with a full project at 2 AM.",

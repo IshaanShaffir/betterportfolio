@@ -1273,7 +1273,7 @@ function ContentTab() {
                 setContent({ ...content, heroSubheading: e.target.value })
               }
               className="w-full px-4 py-2 bg-light-elevated dark:bg-dark-elevated border border-light-border dark:border-dark-border rounded-lg text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-accent-cyan"
-              placeholder="e.g., I build practical, thoughtful web experiences."
+              placeholder="e.g., I build practical, thoughtful experiences."
             />
           </div>
 
