@@ -21,7 +21,7 @@ async function main() {
     {
       title: 'MarmarArts',
       description: 'Full-stack e-commerce site built and launched for a Kelowna artist, with Clerk authentication and Cloudinary image management. Features multi-item Stripe checkout, cart reservations with automatic expiry, a two-stage payment flow for commissions, and digital delivery through signed URLs with watermarking to protect original files.',
-      techStack: ['Next.js', 'Prisma', 'Stripe', 'Clerk', 'Cloudinary'],
+      techStack: ['Next.js', 'TypeScript', 'Tailwind CSS', 'PostgreSQL', 'Prisma', 'Stripe', 'Clerk', 'Cloudinary'],
       githubUrl: null,
       liveUrl: 'https://marmarart.com',
       featured: true,
