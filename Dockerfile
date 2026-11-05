@@ -23,7 +23,8 @@ WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 
-# Generate Prisma Client
+# Generate Prisma Client. The build needs a URL to load config, but never connects to it.
+ENV DATABASE_URL="postgresql://dummy:dummy@localhost:5432/dummy"
 RUN ./node_modules/.bin/prisma generate
 
 # Build Next.js app

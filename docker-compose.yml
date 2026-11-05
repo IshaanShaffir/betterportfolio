@@ -19,6 +19,19 @@ services:
       timeout: 5s
       retries: 5
 
+  # Creates or updates the tables before the app starts and seeds them.
+  migrate:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: builder
+    environment:
+      DATABASE_URL: postgresql://postgres:postgres@db:5432/portfolio?schema=public
+    command: ./node_modules/.bin/prisma db push --skip-generate
+    depends_on:
+      db:
+        condition: service_healthy
+
   web:
     build:
       context: .
@@ -39,9 +52,8 @@ services:
       EMAIL_FROM: ${EMAIL_FROM}
       BLOB_READ_WRITE_TOKEN: ${BLOB_READ_WRITE_TOKEN:-}
     depends_on:
-      db:
-        condition: service_healthy
-    command: sh -c "npx prisma migrate deploy && node server.js"
+      migrate:
+        condition: service_completed_successfully
 
 volumes:
   postgres_data:
