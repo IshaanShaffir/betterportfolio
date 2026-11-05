@@ -5,6 +5,8 @@ import { FiGithub, FiLinkedin, FiMail } from "react-icons/fi";
 import { HiArrowDown } from "react-icons/hi";
 import { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
+import ShatterText from "./ShatterText";
+import FacetedPortrait from "./FacetedPortrait";
 
 const fadeIn = {
   hidden: { opacity: 0, y: 20 },
@@ -185,7 +187,7 @@ export default function Hero() {
   return (
     <section
       id="home"
-      className="min-h-screen relative pt-16 flex items-center bg-light-bg dark:bg-dark-bg"
+      className="min-h-screen relative pt-16 flex items-center"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 w-full">
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
@@ -197,15 +199,22 @@ export default function Hero() {
             className="space-y-6"
           >
             <motion.div variants={fadeIn} transition={{ duration: 0.5 }}>
-              <p className="text-accent-cyan font-mono text-sm mb-2">
+              <p className="mb-4 flex items-center gap-3 font-mono text-sm text-accent-cyan">
+                <span
+                  aria-hidden="true"
+                  className="hex-mark h-3 w-3 bg-accent-cyan"
+                />
                 {content?.heroTitle || "Full-Stack Developer · CS Student"}
               </p>
-              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-gray-900 dark:text-white leading-tight">
-                {content?.heroHeading || "Hi, I'm Ishaan."}
-                <br />
-                <span className="text-gray-600 dark:text-gray-300">
-                  {content?.heroSubheading ||
-                    "I build practical, thoughtful experiences."}
+              <h1 className="font-display text-5xl sm:text-6xl lg:text-7xl font-bold tracking-tight text-gray-900 dark:text-white leading-[1.05]">
+                <ShatterText
+                  text={content?.heroHeading || "Hi, I'm Ishaan."}
+                />
+                <span className="mt-4 block text-3xl sm:text-4xl lg:text-[2.75rem] leading-tight">
+                  <span className="text-gradient">
+                    {content?.heroSubheading ||
+                      "I build practical, thoughtful experiences."}
+                  </span>
                 </span>
               </h1>
             </motion.div>
@@ -213,7 +222,7 @@ export default function Hero() {
             <motion.p
               variants={fadeIn}
               transition={{ duration: 0.5, delay: 0.1 }}
-              className="text-gray-600 dark:text-gray-400 text-lg leading-relaxed max-w-xl"
+              className="text-gray-600 dark:text-gray-300 text-lg leading-relaxed max-w-xl"
             >
               {content?.heroBio ||
                 "I'm a Computer Science student at UBC Okanagan passionate about full-stack development and building systems that solve real problems. From exam analysis tools to weather dashboards and e-commerce platforms, I enjoy bringing ideas to life through code."}
@@ -280,16 +289,7 @@ export default function Hero() {
             <div className="relative">
               {/* Portrait */}
               <div className="relative z-10">
-                <div className="relative w-full max-w-md mx-auto">
-                  <div className="absolute inset-0 bg-gradient-to-br from-accent-cyan to-accent-purple rounded-full blur-2xl opacity-30" />
-                  <div className="relative bg-white dark:bg-dark-elevated rounded-full p-2 border border-light-border dark:border-dark-border">
-                    <img
-                      src="/profile-photo"
-                      alt="Ishaan Shaffir"
-                      className="w-full rounded-full"
-                    />
-                  </div>
-                </div>
+                <FacetedPortrait />
               </div>
 
               {/* Floating Code Card - Now Interactive with Minimize */}
