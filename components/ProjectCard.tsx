@@ -2,6 +2,7 @@
 
 import { useRef } from "react";
 import { FiEdit2, FiExternalLink, FiGithub, FiTrash2 } from "react-icons/fi";
+import { PROJECT_IMAGES } from "@/lib/projectImages";
 
 export interface Project {
   id: number;
@@ -17,88 +18,6 @@ export interface Project {
 
 const MAX_TILT = 5;
 
-// Small seeded generator, so each project keeps the same artwork on every visit.
-function seededRandom(text: string) {
-  let hash = 2166136261;
-  for (let i = 0; i < text.length; i++) {
-    hash = Math.imul(hash ^ text.charCodeAt(i), 16777619);
-  }
-  return () => {
-    hash = Math.imul(hash ^ (hash >>> 15), 2147483647 - 18);
-    hash ^= hash >>> 13;
-    return (hash >>> 0) / 4294967296;
-  };
-}
-
-// Generated low-poly banner, unique to each project.
-function ProjectArt({ title }: { title: string }) {
-  const random = seededRandom(title);
-  const cols = 12;
-  const rows = 4;
-  const width = 600;
-  const height = 160;
-  const cellW = width / cols;
-  const cellH = height / rows;
-  const flip = random() > 0.5;
-
-  // One extra row and column on each side, so jitter never leaves a bare edge.
-  const points: [number, number][][] = [];
-  for (let row = 0; row <= rows + 2; row++) {
-    points.push([]);
-    for (let col = 0; col <= cols + 2; col++) {
-      points[row].push([
-        (col - 1) * cellW + (random() - 0.5) * cellW * 0.8,
-        (row - 1) * cellH + (random() - 0.5) * cellH * 0.8,
-      ]);
-    }
-  }
-
-  const facets: { points: string; color: string; opacity: number }[] = [];
-  const addFacet = (corners: [number, number][], position: number) => {
-    const mix = Math.max(0, Math.min(1, flip ? 1 - position : position));
-    facets.push({
-      points: corners.map((p) => p.join(",")).join(" "),
-      color: mix + (random() - 0.5) * 0.4 > 0.5 ? "#a855f7" : "#06b6d4",
-      opacity: 0.1 + random() * 0.5,
-    });
-  };
-
-  for (let row = 0; row < rows + 2; row++) {
-    for (let col = 0; col < cols + 2; col++) {
-      const a = points[row][col];
-      const b = points[row][col + 1];
-      const c = points[row + 1][col];
-      const d = points[row + 1][col + 1];
-      const position = (col - 1) / cols;
-      if ((row + col) % 2 === 0) {
-        addFacet([a, b, d], position);
-        addFacet([a, d, c], position);
-      } else {
-        addFacet([a, b, c], position);
-        addFacet([b, d, c], position);
-      }
-    }
-  }
-
-  return (
-    <svg
-      aria-hidden="true"
-      viewBox={`0 0 ${width} ${height}`}
-      preserveAspectRatio="xMidYMid slice"
-      className="absolute inset-0 h-full w-full transition-transform duration-700 ease-out group-hover:scale-110"
-    >
-      {facets.map((facet, i) => (
-        <polygon
-          key={i}
-          points={facet.points}
-          fill={facet.color}
-          fillOpacity={facet.opacity}
-        />
-      ))}
-    </svg>
-  );
-}
-
 export default function ProjectCard({
   project,
   large,
@@ -111,6 +30,7 @@ export default function ProjectCard({
   onDelete: (id: number) => void;
 }) {
   const ref = useRef<HTMLElement>(null);
+  const image = PROJECT_IMAGES[project.title];
 
   // Writes styles directly, so moving the cursor doesn't re-render React.
   const handlePointerMove = (e: React.PointerEvent<HTMLElement>) => {
@@ -143,14 +63,26 @@ export default function ProjectCard({
       onPointerLeave={handlePointerLeave}
       className="glow-card group flex h-full flex-col overflow-hidden will-change-transform"
     >
-      {/* The banner grows to take up spare height when a row's cards differ. */}
-      <div
-        className={`relative flex-1 overflow-hidden ${large ? "min-h-40" : "min-h-24"}`}
-      >
-        <ProjectArt title={project.title} />
-      </div>
+      {image && (
+        <div
+          className={`relative flex-1 overflow-hidden border-b border-light-border dark:border-dark-border ${large ? "min-h-80" : "min-h-48"}`}
+        >
+          <img
+            src={image.src}
+            alt={`${project.title} screenshot`}
+            loading="lazy"
+            className={`absolute inset-0 h-full w-full transition-transform duration-700 ease-out group-hover:scale-105 ${
+              image.fit === "contain"
+                ? "bg-light-elevated object-contain p-4 dark:bg-dark-elevated"
+                : "object-cover object-top"
+            }`}
+          />
+        </div>
+      )}
 
-      <div className="relative z-10 flex flex-col p-6">
+      <div
+        className={`relative z-10 flex flex-col p-6 ${image ? "" : "flex-1"}`}
+      >
         {isAdmin && (
           <div className="absolute right-4 top-4 flex gap-2 opacity-0 transition-opacity group-hover:opacity-100">
             <button
@@ -180,7 +112,7 @@ export default function ProjectCard({
           {project.title}
         </h3>
         {project.subtitle && (
-          <p className="mb-3 text-sm font-medium text-accent-purple">
+          <p className="mb-3 text-sm font-medium text-accent-blue">
             {project.subtitle}
           </p>
         )}
@@ -188,7 +120,7 @@ export default function ProjectCard({
           {project.description}
         </p>
 
-        <div className="mb-6 flex flex-wrap gap-2">
+        <div className="mb-6 mt-auto flex flex-wrap gap-2">
           {project.techStack.map((tech) => (
             <span
               key={tech}

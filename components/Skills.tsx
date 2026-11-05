@@ -299,7 +299,7 @@ export default function Skills() {
               <defs>
                 <linearGradient id="skill-link" x1="0" x2="1">
                   <stop offset="0%" stopColor="#22d3ee" />
-                  <stop offset="100%" stopColor="#a855f7" />
+                  <stop offset="100%" stopColor="#3b82f6" />
                 </linearGradient>
               </defs>
               {activeLines.map((line) => (
@@ -372,7 +372,7 @@ export default function Skills() {
                       {...interactions({ type: "project", id: project.id })}
                       className={`rounded-lg border bg-white px-3 py-2 text-left text-sm font-medium text-gray-800 transition-all duration-200 dark:bg-dark-surface dark:text-gray-100 ${dimmed(key)} ${
                         linkedKeys?.has(key)
-                          ? "border-accent-purple shadow-md shadow-accent-purple/30"
+                          ? "border-accent-blue shadow-md shadow-accent-blue/30"
                           : "border-light-border dark:border-dark-border"
                       }`}
                     >

@@ -11,6 +11,7 @@ const ROW_PATTERNS = [
   [4, 2],
   [2, 4],
   [3, 3],
+  [3, 3],
 ];
 const SPAN_CLASSES: Record<number, string> = {
   2: "lg:col-span-2",

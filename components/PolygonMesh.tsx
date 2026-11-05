@@ -8,7 +8,7 @@ const RIPPLE_SPEED = 560;
 const RIPPLE_WIDTH = 140;
 const RIPPLE_LIFETIME = 1.5;
 const CYAN = [6, 182, 212];
-const PURPLE = [168, 85, 247];
+const BLUE = [59, 130, 246];
 
 interface Ripple {
   x: number;
@@ -178,11 +178,11 @@ export default function PolygonMesh() {
           }
         }
 
-        // Colour moves from cyan to purple across the screen and down the page.
+        // Colour moves from cyan to blue across the screen and down the page.
         const mix = Math.min(1, Math.max(0, cx / width * 0.5 + progress * 0.6));
-        const r = Math.round(CYAN[0] + (PURPLE[0] - CYAN[0]) * mix);
-        const g = Math.round(CYAN[1] + (PURPLE[1] - CYAN[1]) * mix);
-        const blue = Math.round(CYAN[2] + (PURPLE[2] - CYAN[2]) * mix);
+        const r = Math.round(CYAN[0] + (BLUE[0] - CYAN[0]) * mix);
+        const g = Math.round(CYAN[1] + (BLUE[1] - CYAN[1]) * mix);
+        const blue = Math.round(CYAN[2] + (BLUE[2] - CYAN[2]) * mix);
 
         ctx.fillStyle = `rgba(${r},${g},${blue},${alpha.toFixed(3)})`;
         ctx.beginPath();

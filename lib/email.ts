@@ -17,7 +17,7 @@ export async function sendLoginCode(email: string, code: string) {
     subject: '🔐 Your Admin Login Code',
     html: `
       <div style="font-family: system-ui, -apple-system, sans-serif; max-width: 600px; margin: 0 auto;">
-        <div style="background: linear-gradient(135deg, #06b6d4 0%, #a855f7 100%); padding: 30px; text-align: center;">
+        <div style="background: linear-gradient(135deg, #06b6d4 0%, #3b82f6 100%); padding: 30px; text-align: center;">
           <h1 style="color: white; margin: 0; font-size: 28px;">Portfolio Admin Login</h1>
         </div>
         <div style="background: #f9f9f9; padding: 40px; border-radius: 0 0 8px 8px;">

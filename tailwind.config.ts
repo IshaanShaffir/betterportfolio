@@ -25,8 +25,8 @@ const config: Config = {
         accent: {
           cyan: '#06b6d4',
           'cyan-light': '#22d3ee',
-          purple: '#a855f7',
-          'purple-light': '#c084fc',
+          blue: '#3b82f6',
+          'blue-light': '#60a5fa',
         },
       },
       fontFamily: {

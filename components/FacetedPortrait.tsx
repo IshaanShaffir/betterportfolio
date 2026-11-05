@@ -33,7 +33,7 @@ export default function FacetedPortrait() {
       onPointerMove={handlePointerMove}
       className="group relative mx-auto aspect-square w-full max-w-md"
     >
-      <div className="absolute inset-4 rounded-full bg-gradient-to-br from-accent-cyan to-accent-purple opacity-30 blur-3xl" />
+      <div className="absolute inset-4 rounded-full bg-gradient-to-br from-accent-cyan to-accent-blue opacity-30 blur-3xl" />
 
       {/* Rotating gradient, visible as the gem's edge. */}
       <div
@@ -44,7 +44,7 @@ export default function FacetedPortrait() {
           className="facet-spin absolute -inset-1/4"
           style={{
             background:
-              "conic-gradient(from 0deg, #06b6d4, #a855f7, #22d3ee, #c084fc, #06b6d4)",
+              "conic-gradient(from 0deg, #06b6d4, #3b82f6, #22d3ee, #60a5fa, #06b6d4)",
           }}
         />
       </div>
@@ -74,7 +74,7 @@ export default function FacetedPortrait() {
               <polygon
                 key={i}
                 points={`${x},${y} ${nextX},${nextY} ${inner(nextX, nextY)} ${inner(x, y)}`}
-                fill={i % 2 === 0 ? "#22d3ee" : "#a855f7"}
+                fill={i % 2 === 0 ? "#22d3ee" : "#3b82f6"}
                 fillOpacity={i % 2 === 0 ? 0.12 : 0.16}
                 stroke="#ffffff"
                 strokeOpacity={0.14}

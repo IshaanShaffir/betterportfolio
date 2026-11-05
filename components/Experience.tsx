@@ -106,7 +106,7 @@ export default function Experience() {
             className="absolute bottom-0 left-[11px] top-0 w-0.5 bg-light-border dark:bg-dark-border lg:left-1/2 lg:-ml-px"
           >
             <motion.div
-              className="h-full w-full origin-top bg-gradient-to-b from-accent-cyan to-accent-purple"
+              className="h-full w-full origin-top bg-gradient-to-b from-accent-cyan to-accent-blue"
               style={{ scaleY: reducedMotion ? 1 : lineProgress }}
             />
           </div>
@@ -133,7 +133,7 @@ export default function Experience() {
                       transition={{ type: "spring", stiffness: 260, damping: 16 }}
                       className="absolute left-0 top-6 z-10 lg:left-1/2 lg:-ml-3"
                     >
-                      <span className="hex-mark block h-6 w-6 bg-gradient-to-br from-accent-cyan to-accent-purple" />
+                      <span className="hex-mark block h-6 w-6 bg-gradient-to-br from-accent-cyan to-accent-blue" />
                     </motion.div>
 
                     <motion.div
