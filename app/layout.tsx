@@ -13,7 +13,7 @@ const mono = JetBrains_Mono({ subsets: ["latin"], variable: "--font-mono" });
 export const metadata: Metadata = {
   title: "Ishaan Shaffir - Full-Stack Developer",
   description:
-    "Computer Science student at UBC Okanagan focused on building practical web applications. Full-stack developer interested in AI/ML, game dev, and HCI.",
+    "Computer Science student at UBC Okanagan focused on building practical web applications. Full-stack developer interested in AI/ML and HCI.",
   keywords: [
     "Ishaan Shaffir",
     "Full-Stack Developer",

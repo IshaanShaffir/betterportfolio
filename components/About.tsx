@@ -46,12 +46,12 @@ export default function About() {
     {
       icon: <HiCode size={22} />,
       label: "Favorite Stack",
-      value: content?.favouriteStack || "React · Flask · Firebase",
+      value: content?.favouriteStack || "Next.js · TypeScript · PostgreSQL",
     },
     {
       icon: <HiLightningBolt size={22} />,
       label: "Currently Vibing",
-      value: content?.currentlyVibing || "AI APIs & Game Dev",
+      value: content?.currentlyVibing || "Full-Stack Apps & AI APIs",
     },
   ];
 

@@ -29,7 +29,7 @@ async function main() {
     },
     {
       title: 'ExamGen - Exam Analysis System',
-      description: 'Full-stack exam analysis system with automatic OMR processing and analytics. Reduced grading time by 70% through data validation scripts and REST APIs with JWT authentication. Backend tested with pytest in a dedicated Docker container and front end with Jest, with CI/CD workflows for automated builds.',
+      description: 'Full-stack exam analysis system with automatic OMR processing and analytics. Reduced grading workload by approximately 70% through automated scoring and validation, with REST APIs secured by JWT authentication. Backend tested with pytest in a dedicated Docker container and front end with Jest, with CI/CD workflows for automated builds.',
       techStack: ['Flask', 'React', 'MySQL', 'Tailwind', 'Python', 'JWT', 'Docker', 'pytest', 'Jest'],
       githubUrl: 'https://github.com/IshaanShaffir/ExamGen-Capstone',
       liveUrl: null,
@@ -65,7 +65,7 @@ async function main() {
     },
     {
       title: 'PEWPEWPANIC!',
-      description: 'A 3D space shooter built in Unity with C#—a modern 3D reimagining of Space Invaders. Features 10 handcrafted levels, diverse enemy AI with unique movement patterns, power-ups, and an epic boss battle.',
+      description: 'A 3D space shooter built in Unity with C#—a modern 3D reimagining of Space Invaders. Features 3 handcrafted levels, diverse enemy AI with unique movement patterns, power-ups, and an epic boss battle.',
       techStack: ['Unity', 'C#', 'Game Design', '3D'],
       githubUrl: 'https://github.com/IshaanShaffir/PewPewPanic',
       liveUrl: 'https://ishaanshaffir.itch.io/pewpewpanic',
@@ -111,9 +111,9 @@ async function main() {
       startDate: new Date('2023-09-01'),
       endDate: new Date('2023-12-31'),
       bullets: [
-        'Verified and standardized large client datasets to ensure accuracy and consistency for migration',
-        'Performed one-to-one file naming validation and metadata checks to maintain data integrity',
-        'Collaborated with the technical team to resolve data discrepancies and streamline validation processes',
+        'Verified and standardized large client datasets for accuracy and consistency ahead of a data migration.',
+        'Performed one-to-one file naming validation and metadata checks to maintain data integrity.',
+        'Worked with the technical team to resolve data discrepancies and streamline the validation process.',
       ],
       order: 1,
     },
@@ -124,9 +124,7 @@ async function main() {
       startDate: new Date('2025-08-01'),
       endDate: new Date('2025-09-30'),
       bullets: [
-        'Supported onboarding of 300+ new students, facilitating events and guiding academic transitions',
-        'Demonstrated leadership, communication, and teamwork in a high-responsibility campus role',
-        'Led orientation groups, campus tours and welcome events',
+        'Supported onboarding for 300+ new students by leading orientation groups, campus tours and welcome events.',
       ],
       order: 2,
     },
@@ -137,9 +135,7 @@ async function main() {
       startDate: new Date('2025-06-01'),
       endDate: null,
       bullets: [
-        'Delivered excellent customer service and maintained product accuracy in fast-paced retail settings',
-        'Collaborated with team members to meet daily sales and operational goals',
-        'Serve customers across footwear, cycling, camping and cash',
+        'Serve customers across footwear, cycling, camping and cash, collaborating with the team to meet daily operational goals.',
       ],
       order: 3,
     },
@@ -159,7 +155,7 @@ async function main() {
   const skillCategories = [
     {
       name: 'Languages',
-      skills: ['TypeScript', 'Java', 'Python', 'JavaScript', 'C#', 'Kotlin', 'C++', 'SQL'],
+      skills: ['TypeScript', 'Java', 'Python', 'JavaScript', 'C++', 'SQL'],
     },
     {
       name: 'Frameworks & Tools',
@@ -167,7 +163,7 @@ async function main() {
     },
     {
       name: 'Cloud & DevOps',
-      skills: ['Vercel', 'Render', 'Neon', 'AWS', 'CI/CD', 'RESTful APIs', 'Agile', 'Docker Compose', 'GitHub Actions'],
+      skills: ['Vercel', 'Render', 'Neon', 'CI/CD', 'Docker Compose', 'GitHub Actions'],
     },
     {
       name: 'Databases',
@@ -175,7 +171,7 @@ async function main() {
     },
     {
       name: 'Concepts',
-      skills: ['MVC Architecture', 'Microservices', 'OOP', 'Data Structures', 'Algorithms', 'SDLC', 'JWT Auth', 'Unit Testing'],
+      skills: ['MVC Architecture', 'OOP', 'Data Structures', 'Algorithms', 'SDLC', 'JWT Auth', 'Unit Testing', 'RESTful APIs', 'Agile'],
     },
   ];
 
@@ -213,8 +209,8 @@ async function main() {
       aboutParagraph3: "I'm a big believer in learning by doing. Whether it's experimenting with AI APIs, picking up a new programming language, or figuring out how to deploy something I built to the cloud—I'm always tinkering. If you want to chat about tech, collaborate on something cool, or just talk about what you're building, I'm all ears!",
       location: 'Kelowna, BC',
       education: 'BSc Computer Science',
-      favouriteStack: 'React · Flask · Firebase',
-      currentlyVibing: 'AI APIs & Game Dev',
+      favouriteStack: 'Next.js · TypeScript · PostgreSQL',
+      currentlyVibing: 'Full-Stack Apps & AI APIs',
     },
   });
   console.log('✅ Site content seeded');

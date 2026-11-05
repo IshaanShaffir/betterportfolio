@@ -1391,7 +1391,7 @@ function ContentTab() {
                   setContent({ ...content, favouriteStack: e.target.value })
                 }
                 className="w-full px-4 py-2 bg-light-elevated dark:bg-dark-elevated border border-light-border dark:border-dark-border rounded-lg text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-accent-cyan"
-                placeholder="e.g., React · Flask · Firebase"
+                placeholder="e.g., Next.js · TypeScript · PostgreSQL"
               />
             </div>
 
@@ -1406,7 +1406,7 @@ function ContentTab() {
                   setContent({ ...content, currentlyVibing: e.target.value })
                 }
                 className="w-full px-4 py-2 bg-light-elevated dark:bg-dark-elevated border border-light-border dark:border-dark-border rounded-lg text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-accent-cyan"
-                placeholder="e.g., AI APIs & Game Dev"
+                placeholder="e.g., Full-Stack Apps & AI APIs"
               />
             </div>
           </div>

@@ -22,8 +22,8 @@ export async function GET() {
           aboutParagraph3: "I'm a big believer in learning by doing. Whether it's experimenting with AI APIs, picking up a new programming language, or figuring out how to deploy something I built to the cloud—I'm always tinkering. If you want to chat about tech, collaborate on something cool, or just talk about what you're building, I'm all ears!",
           location: 'Kelowna, BC',
           education: 'BSc Computer Science',
-          favouriteStack: 'React · Flask · Firebase',
-          currentlyVibing: 'AI APIs & Game Dev',
+          favouriteStack: 'Next.js · TypeScript · PostgreSQL',
+          currentlyVibing: 'Full-Stack Apps & AI APIs',
         },
       });
     }
