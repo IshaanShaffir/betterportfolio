@@ -163,7 +163,7 @@ async function main() {
     },
     {
       name: 'Frameworks & Tools',
-      skills: ['Next.js', 'Spring Boot', 'Flask', 'React', 'Firebase', 'Docker', 'Git', 'Tailwind', 'JSP', 'Prisma', 'Android', 'Clerk', 'Stripe', 'Google Gemini API', 'OpenWeather API', 'pytest', 'Jest', 'Linux', 'VS Code', 'Claude Code', 'OpenCode', 'GitHub Copilot'],
+      skills: ['Next.js', 'Spring Boot', 'Flask', 'React', 'Firebase', 'Docker', 'Git', 'Tailwind', 'JSP', 'Prisma', 'Android', 'Clerk', 'Stripe', 'Google Gemini API', 'OpenWeather API', 'pytest', 'Jest', 'Linux', 'VS Code', 'Claude Code', 'OpenCode', 'GitHub Copilot', 'Cloudinary'],
     },
     {
       name: 'Cloud & DevOps',
