@@ -13,6 +13,7 @@ const POINTS: [number, number][] = [
   [11, 14],
 ];
 const CLIP = `polygon(${POINTS.map(([x, y]) => `${x}% ${y}%`).join(", ")})`;
+const INNER_RING = 0.8;
 
 // The portrait is cut into a gem shape, with facets that catch the cursor's light.
 export default function FacetedPortrait() {
@@ -64,16 +65,19 @@ export default function FacetedPortrait() {
           preserveAspectRatio="none"
           className="absolute inset-0 h-full w-full"
         >
+          {/* Facets stay in an outer ring, so no lines cross the face. */}
           {POINTS.map(([x, y], i) => {
             const [nextX, nextY] = POINTS[(i + 1) % POINTS.length];
+            const inner = (px: number, py: number) =>
+              `${50 + (px - 50) * INNER_RING},${50 + (py - 50) * INNER_RING}`;
             return (
               <polygon
                 key={i}
-                points={`50,50 ${x},${y} ${nextX},${nextY}`}
-                fill={i % 2 === 0 ? "#ffffff" : "#06b6d4"}
-                fillOpacity={i % 2 === 0 ? 0.035 : 0.05}
+                points={`${x},${y} ${nextX},${nextY} ${inner(nextX, nextY)} ${inner(x, y)}`}
+                fill={i % 2 === 0 ? "#22d3ee" : "#a855f7"}
+                fillOpacity={i % 2 === 0 ? 0.12 : 0.16}
                 stroke="#ffffff"
-                strokeOpacity={0.09}
+                strokeOpacity={0.14}
                 strokeWidth={0.25}
               />
             );

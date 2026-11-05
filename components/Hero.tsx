@@ -394,7 +394,7 @@ export default function Hero() {
             initial={{ scale: 0 }}
             animate={{ scale: 1 }}
             onClick={() => setIsMinimized(false)}
-            className="fixed bottom-8 right-8 z-50 p-4 bg-accent-cyan text-dark-bg rounded-full shadow-lg hover:shadow-xl hover:shadow-accent-cyan/50 transition-all duration-200 hover:scale-110"
+            className="fixed bottom-4 right-4 sm:bottom-8 sm:right-8 z-50 p-2.5 sm:p-4 bg-accent-cyan text-dark-bg rounded-full shadow-lg hover:shadow-xl hover:shadow-accent-cyan/50 transition-all duration-200 hover:scale-110"
             title="Open Terminal"
           >
             <svg

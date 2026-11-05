@@ -41,13 +41,14 @@ function ProjectArt({ title }: { title: string }) {
   const cellH = height / rows;
   const flip = random() > 0.5;
 
+  // One extra row and column on each side, so jitter never leaves a bare edge.
   const points: [number, number][][] = [];
-  for (let row = 0; row <= rows; row++) {
+  for (let row = 0; row <= rows + 2; row++) {
     points.push([]);
-    for (let col = 0; col <= cols; col++) {
+    for (let col = 0; col <= cols + 2; col++) {
       points[row].push([
-        col * cellW + (random() - 0.5) * cellW * 0.8,
-        row * cellH + (random() - 0.5) * cellH * 0.8,
+        (col - 1) * cellW + (random() - 0.5) * cellW * 0.8,
+        (row - 1) * cellH + (random() - 0.5) * cellH * 0.8,
       ]);
     }
   }
@@ -62,13 +63,13 @@ function ProjectArt({ title }: { title: string }) {
     });
   };
 
-  for (let row = 0; row < rows; row++) {
-    for (let col = 0; col < cols; col++) {
+  for (let row = 0; row < rows + 2; row++) {
+    for (let col = 0; col < cols + 2; col++) {
       const a = points[row][col];
       const b = points[row][col + 1];
       const c = points[row + 1][col];
       const d = points[row + 1][col + 1];
-      const position = col / cols;
+      const position = (col - 1) / cols;
       if ((row + col) % 2 === 0) {
         addFacet([a, b, d], position);
         addFacet([a, d, c], position);
@@ -84,7 +85,7 @@ function ProjectArt({ title }: { title: string }) {
       aria-hidden="true"
       viewBox={`0 0 ${width} ${height}`}
       preserveAspectRatio="xMidYMid slice"
-      className="h-full w-full transition-transform duration-700 ease-out group-hover:scale-110"
+      className="absolute inset-0 h-full w-full transition-transform duration-700 ease-out group-hover:scale-110"
     >
       {facets.map((facet, i) => (
         <polygon
@@ -142,11 +143,14 @@ export default function ProjectCard({
       onPointerLeave={handlePointerLeave}
       className="glow-card group flex h-full flex-col overflow-hidden will-change-transform"
     >
-      <div className={`overflow-hidden ${large ? "h-40" : "h-24"}`}>
+      {/* The banner grows to take up spare height when a row's cards differ. */}
+      <div
+        className={`relative flex-1 overflow-hidden ${large ? "min-h-40" : "min-h-24"}`}
+      >
         <ProjectArt title={project.title} />
       </div>
 
-      <div className="relative z-10 flex flex-1 flex-col p-6">
+      <div className="relative z-10 flex flex-col p-6">
         {isAdmin && (
           <div className="absolute right-4 top-4 flex gap-2 opacity-0 transition-opacity group-hover:opacity-100">
             <button
@@ -180,7 +184,7 @@ export default function ProjectCard({
             {project.subtitle}
           </p>
         )}
-        <p className="mb-5 flex-1 leading-relaxed text-gray-600 dark:text-gray-300">
+        <p className="mb-5 leading-relaxed text-gray-600 dark:text-gray-300">
           {project.description}
         </p>
 
