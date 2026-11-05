@@ -37,6 +37,7 @@ services:
       EMAIL_SERVER_USER: ${EMAIL_SERVER_USER}
       EMAIL_SERVER_PASSWORD: ${EMAIL_SERVER_PASSWORD}
       EMAIL_FROM: ${EMAIL_FROM}
+      BLOB_READ_WRITE_TOKEN: ${BLOB_READ_WRITE_TOKEN:-}
     depends_on:
       db:
         condition: service_healthy
