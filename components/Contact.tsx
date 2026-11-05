@@ -17,7 +17,7 @@ export default function Contact() {
   return (
     <section
       id="contact"
-      className="relative py-20 lg:py-32 bg-light-bg dark:bg-dark-bg"
+      className="relative py-24 lg:py-36"
     >
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
@@ -30,15 +30,15 @@ export default function Contact() {
           <motion.h2
             variants={fadeInUp}
             transition={{ duration: 0.5 }}
-            className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 dark:text-white mb-6"
+            className="font-display text-4xl sm:text-5xl lg:text-7xl font-bold tracking-tight text-gray-900 dark:text-white mb-6"
           >
-            Let's connect
+            Let's <span className="text-gradient">connect</span>
           </motion.h2>
 
           <motion.p
             variants={fadeInUp}
             transition={{ duration: 0.5, delay: 0.1 }}
-            className="text-gray-600 dark:text-gray-400 text-lg mb-12 max-w-2xl mx-auto"
+            className="text-gray-600 dark:text-gray-300 text-lg mb-12 max-w-2xl mx-auto"
           >
             If you'd like to talk about an internship, collaboration, or
             project, feel free to reach out. I'm always open to interesting

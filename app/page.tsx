@@ -4,12 +4,12 @@ import About from "@/components/About";
 import Projects from "@/components/Projects";
 import Experience from "@/components/Experience";
 import Contact from "@/components/Contact";
-import CursorGlow from "@/components/CursorGlow";
+import PolygonMesh from "@/components/PolygonMesh";
 
 export default function Home() {
   return (
     <>
-      <CursorGlow />
+      <PolygonMesh />
       <Navbar />
       <main className="relative z-10">
         <Hero />

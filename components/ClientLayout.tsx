@@ -1,7 +1,7 @@
 "use client";
 
+import { MotionConfig } from "framer-motion";
 import { ThemeProvider } from "./ThemeProvider";
-import CursorGlow from "./CursorGlow";
 
 export default function ClientLayout({
   children,
@@ -10,8 +10,7 @@ export default function ClientLayout({
 }) {
   return (
     <ThemeProvider>
-      <CursorGlow />
-      {children}
+      <MotionConfig reducedMotion="user">{children}</MotionConfig>
     </ThemeProvider>
   );
 }
