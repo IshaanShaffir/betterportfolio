@@ -185,6 +185,7 @@ export const skillIconMap: Record<string, any> = {
   nginx: SiNginx,
   linux: SiLinux,
   vscode: TbBrandVscode,
+  "vs code": TbBrandVscode,
   "visual studio code": SiVisualstudiocode,
 
   // Styling & UI

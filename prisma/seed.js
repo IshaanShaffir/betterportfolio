@@ -13,12 +13,24 @@ async function main() {
   });
   console.log(`✅ Admin user created: ${adminEmail}`);
 
+  // Seeding only adds what's missing. Existing rows are left alone, so running
+  // it again can't overwrite edits made in the admin dashboard.
+
   // Seed Projects
   const projects = [
     {
+      title: 'MarmarArts',
+      description: 'Full-stack e-commerce site built and launched for a Kelowna artist, with Clerk authentication and Cloudinary image management. Features multi-item Stripe checkout, cart reservations with automatic expiry, a two-stage payment flow for commissions, and digital delivery through signed URLs with watermarking to protect original files.',
+      techStack: ['Next.js', 'Prisma', 'Stripe', 'Clerk', 'Cloudinary'],
+      githubUrl: null,
+      liveUrl: 'https://marmarart.com',
+      featured: true,
+      order: 0,
+    },
+    {
       title: 'ExamGen - Exam Analysis System',
-      description: 'Full-stack exam analysis system with automatic OMR processing and analytics. Reduced grading time by 70% through data validation scripts and REST APIs with JWT authentication.',
-      techStack: ['Flask', 'React', 'MySQL', 'Tailwind', 'Python'],
+      description: 'Full-stack exam analysis system with automatic OMR processing and analytics. Reduced grading time by 70% through data validation scripts and REST APIs with JWT authentication. Backend tested with pytest in a dedicated Docker container and front end with Jest, with CI/CD workflows for automated builds.',
+      techStack: ['Flask', 'React', 'MySQL', 'Tailwind', 'Python', 'JWT', 'Docker', 'pytest', 'Jest'],
       githubUrl: 'https://github.com/IshaanShaffir/ExamGen-Capstone',
       liveUrl: null,
       featured: true,
@@ -27,29 +39,20 @@ async function main() {
     {
       title: 'SlideSnap AI',
       description: 'Chrome extension that automatically summarizes Canvas lecture slides using Google Gemini AI. Extracts key terms, generates practice questions, and provides PDF text extraction with PDF.js.',
-      techStack: ['JavaScript', 'Gemini API', 'Chrome Extension', 'PDF.js'],
+      techStack: ['JavaScript', 'Gemini API', 'Chrome Extension', 'PDF.js', 'Tailwind CSS'],
       githubUrl: 'https://github.com/IshaanShaffir/SlideSnap--Canvas-Extension',
       liveUrl: null,
       featured: true,
       order: 2,
     },
     {
-      title: 'WeatherCast',
-      description: 'Personalized weather dashboard using OpenWeather API and geolocation. Managed with Agile sprints and collaborative GitHub workflow for feature delivery.',
-      techStack: ['Java', 'Spring Boot', 'Next.js', 'TypeScript', 'PostgreSQL'],
-      githubUrl: 'https://github.com/IshaanShaffir/COSC-310-WeatherCast-WeatherWebApp',
-      liveUrl: 'https://weather-cast-v2.vercel.app/',
-      featured: true,
-      order: 3,
-    },
-    {
       title: 'Dynamic Portfolio Website',
       description: 'Modern full-stack portfolio with admin dashboard for real-time content management. Features 2FA email authentication, dark mode, Docker deployment, and PostgreSQL database with Prisma ORM.',
-      techStack: ['Next.js', 'TypeScript', 'Prisma', 'PostgreSQL', 'Docker', 'Tailwind CSS'],
+      techStack: ['Next.js', 'TypeScript', 'Prisma', 'PostgreSQL', 'Docker', 'Tailwind CSS', 'Vercel'],
       githubUrl: 'https://github.com/IshaanShaffir/betterportfolio',
       liveUrl: null,
       featured: true,
-      order: 4,
+      order: 3,
     },
     {
       title: 'PEWPEWPANIC!',
@@ -58,7 +61,7 @@ async function main() {
       githubUrl: 'https://github.com/IshaanShaffir/PewPewPanic',
       liveUrl: 'https://ishaanshaffir.itch.io/pewpewpanic',
       featured: false,
-      order: 5,
+      order: 4,
     },
     {
       title: 'ToolPool',
@@ -66,6 +69,15 @@ async function main() {
       techStack: ['Java', 'Firebase', 'Firestore', 'Android'],
       githubUrl: 'https://github.com/IshaanShaffir/ToolPool',
       liveUrl: null,
+      featured: false,
+      order: 5,
+    },
+    {
+      title: 'WeatherCast',
+      description: 'Spring Boot rebuild of the original Flask prototype, delivering daily and hourly forecasts from the OpenWeather API, with browser geolocation for personalized, location-aware dashboards. Managed with Agile sprints and a collaborative GitHub workflow.',
+      techStack: ['Java', 'Spring Boot', 'OpenWeather API'],
+      githubUrl: 'https://github.com/IshaanShaffir/COSC-310-WeatherCast-WeatherWebApp',
+      liveUrl: 'https://weather-cast-v2.vercel.app/',
       featured: false,
       order: 6,
     },
@@ -84,13 +96,7 @@ async function main() {
     const existing = await prisma.project.findFirst({
       where: { title: project.title },
     });
-    
-    if (existing) {
-      await prisma.project.update({
-        where: { id: existing.id },
-        data: project,
-      });
-    } else {
+    if (!existing) {
       await prisma.project.create({ data: project });
     }
   }
@@ -120,18 +126,20 @@ async function main() {
       bullets: [
         'Supported onboarding of 300+ new students, facilitating events and guiding academic transitions',
         'Demonstrated leadership, communication, and teamwork in a high-responsibility campus role',
+        'Led orientation groups, campus tours and welcome events',
       ],
       order: 2,
     },
     {
       role: 'Retail Associate',
       company: 'Mountain Equipment Company (MEC)',
-      location: 'Surrey, BC',
+      location: 'Kelowna, BC',
       startDate: new Date('2025-06-01'),
       endDate: null,
       bullets: [
         'Delivered excellent customer service and maintained product accuracy in fast-paced retail settings',
         'Collaborated with team members to meet daily sales and operational goals',
+        'Serve customers across footwear, cycling, camping and cash',
       ],
       order: 3,
     },
@@ -139,18 +147,9 @@ async function main() {
 
   for (const experience of experiences) {
     const existing = await prisma.experience.findFirst({
-      where: {
-        role: experience.role,
-        company: experience.company,
-      },
+      where: { role: experience.role, company: experience.company },
     });
-    
-    if (existing) {
-      await prisma.experience.update({
-        where: { id: existing.id },
-        data: experience,
-      });
-    } else {
+    if (!existing) {
       await prisma.experience.create({ data: experience });
     }
   }
@@ -160,68 +159,40 @@ async function main() {
   const skillCategories = [
     {
       name: 'Languages',
-      order: 1,
-      skills: ['TypeScript', 'Java', 'Python', 'JavaScript', 'C#', 'Kotlin', 'C++'],
+      skills: ['TypeScript', 'Java', 'Python', 'JavaScript', 'C#', 'Kotlin', 'C++', 'SQL'],
     },
     {
       name: 'Frameworks & Tools',
-      order: 2,
-      skills: ['Next.js', 'Spring Boot', 'Flask', 'React', 'Firebase', 'Docker', 'Git', 'Tailwind', 'JSP'],
+      skills: ['Next.js', 'Spring Boot', 'Flask', 'React', 'Firebase', 'Docker', 'Git', 'Tailwind', 'JSP', 'Prisma', 'Android', 'Clerk', 'Stripe', 'Google Gemini API', 'OpenWeather API', 'pytest', 'Jest', 'Linux', 'VS Code', 'Claude Code', 'OpenCode', 'GitHub Copilot'],
     },
     {
       name: 'Cloud & DevOps',
-      order: 3,
-      skills: ['Vercel', 'Render', 'Neon', 'AWS', 'CI/CD', 'RESTful APIs', 'Agile'],
+      skills: ['Vercel', 'Render', 'Neon', 'AWS', 'CI/CD', 'RESTful APIs', 'Agile', 'Docker Compose', 'GitHub Actions'],
     },
     {
       name: 'Databases',
-      order: 4,
       skills: ['PostgreSQL', 'MySQL', 'SQL Server', 'SQLite', 'Firestore'],
     },
     {
       name: 'Concepts',
-      order: 5,
-      skills: ['MVC Architecture', 'Microservices', 'OOP', 'Data Structures', 'Algorithms', 'SDLC', 'JWT Auth'],
+      skills: ['MVC Architecture', 'Microservices', 'OOP', 'Data Structures', 'Algorithms', 'SDLC', 'JWT Auth', 'Unit Testing'],
     },
   ];
 
-  for (const category of skillCategories) {
-    const { skills, ...categoryData } = category;
-    let createdCategory = await prisma.skillCategory.findFirst({
-      where: { name: category.name },
-    });
-    
-    if (createdCategory) {
-      await prisma.skillCategory.update({
-        where: { id: createdCategory.id },
-        data: categoryData,
-      });
-    } else {
-      createdCategory = await prisma.skillCategory.create({
-        data: categoryData,
-      });
-    }
+  for (let categoryIndex = 0; categoryIndex < skillCategories.length; categoryIndex++) {
+    const { name, skills } = skillCategories[categoryIndex];
+    const category =
+      (await prisma.skillCategory.findFirst({ where: { name } })) ??
+      (await prisma.skillCategory.create({ data: { name, order: categoryIndex + 1 } }));
 
-    for (let i = 0; i < skills.length; i++) {
-      const existingSkill = await prisma.skill.findFirst({
-        where: {
-          name: skills[i],
-          categoryId: createdCategory.id,
-        },
+    for (let skillIndex = 0; skillIndex < skills.length; skillIndex++) {
+      const skillName = skills[skillIndex];
+      const existing = await prisma.skill.findFirst({
+        where: { name: skillName, categoryId: category.id },
       });
-      
-      if (existingSkill) {
-        await prisma.skill.update({
-          where: { id: existingSkill.id },
-          data: { order: i },
-        });
-      } else {
+      if (!existing) {
         await prisma.skill.create({
-          data: {
-            name: skills[i],
-            categoryId: createdCategory.id,
-            order: i,
-          },
+          data: { name: skillName, categoryId: category.id, order: skillIndex },
         });
       }
     }
