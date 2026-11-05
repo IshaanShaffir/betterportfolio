@@ -316,10 +316,11 @@ colors: {
 
 ### Resume
 
-Place your resume PDF in the `/public` folder:
+Upload your resume and profile photo from Site Settings in the admin dashboard. Uploads go live immediately, with no redeploy.
 
-- Name it `resume.pdf`
-- The download link in the Hero section will automatically work
+- Files are stored in Vercel Blob, which needs a public Blob store connected to the project
+- `/resume.pdf` and `/profile-photo` always redirect to the latest upload
+- `public/resume-fallback.pdf` and `public/ishaan-photo.jpg` are served until the first upload
 
 ## 🔒 Security Notes
 

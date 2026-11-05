@@ -3,6 +3,7 @@
 import { useEffect, useState, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { FiLogOut, FiSave, FiX, FiPlus, FiTrash2 } from "react-icons/fi";
+import { MAX_UPLOAD_BYTES } from "@/lib/uploadLimits";
 
 // Force dynamic rendering
 export const dynamic = "force-dynamic";
@@ -1416,6 +1417,30 @@ function ContentTab() {
 }
 
 // Settings Tab Component
+// Returns an error message, or null if the upload succeeded.
+async function uploadFile(url: string, field: string, file: File) {
+  if (file.size > MAX_UPLOAD_BYTES) {
+    return "File is too large. The limit is 4 MB.";
+  }
+
+  const formData = new FormData();
+  formData.append(field, file);
+
+  try {
+    const res = await fetch(url, { method: "POST", body: formData });
+    if (res.ok) return null;
+
+    if (res.status === 401) return "Your session has expired. Log in again.";
+    if (res.status === 413) return "File is too large. The limit is 4 MB.";
+
+    // Platform error pages aren't JSON, so don't assume a parsable body.
+    const data = await res.json().catch(() => null);
+    return data?.error || `Upload failed (status ${res.status})`;
+  } catch {
+    return "Upload failed: couldn't reach the server.";
+  }
+}
+
 function SettingsTab() {
   const [resumeFile, setResumeFile] = useState<File | null>(null);
   const [imageFile, setImageFile] = useState<File | null>(null);
@@ -1429,28 +1454,15 @@ function SettingsTab() {
     setUploading(true);
     setMessage("");
 
-    try {
-      const formData = new FormData();
-      formData.append("resume", resumeFile);
+    const error = await uploadFile("/api/upload/resume", "resume", resumeFile);
 
-      const res = await fetch("/api/upload/resume", {
-        method: "POST",
-        body: formData,
-      });
-
-      const data = await res.json();
-
-      if (res.ok) {
-        setMessage("✓ Resume updated successfully!");
-        setResumeFile(null);
-      } else {
-        setMessage("✗ " + (data.error || "Upload failed"));
-      }
-    } catch (error) {
-      setMessage("✗ Upload failed");
-    } finally {
-      setUploading(false);
+    if (error) {
+      setMessage("✗ " + error);
+    } else {
+      setMessage("✓ Resume updated. It's live on the site now.");
+      setResumeFile(null);
     }
+    setUploading(false);
   };
 
   const handleImageUpload = async (e: React.FormEvent) => {
@@ -1460,30 +1472,15 @@ function SettingsTab() {
     setUploading(true);
     setMessage("");
 
-    try {
-      const formData = new FormData();
-      formData.append("image", imageFile);
+    const error = await uploadFile("/api/upload/image", "image", imageFile);
 
-      const res = await fetch("/api/upload/image", {
-        method: "POST",
-        body: formData,
-      });
-
-      const data = await res.json();
-
-      if (res.ok) {
-        setMessage(
-          "✓ Profile image updated successfully! Refresh to see changes.",
-        );
-        setImageFile(null);
-      } else {
-        setMessage("✗ " + (data.error || "Upload failed"));
-      }
-    } catch (error) {
-      setMessage("✗ Upload failed");
-    } finally {
-      setUploading(false);
+    if (error) {
+      setMessage("✗ " + error);
+    } else {
+      setMessage("✓ Profile image updated. It's live on the site now.");
+      setImageFile(null);
     }
+    setUploading(false);
   };
 
   return (
@@ -1521,7 +1518,7 @@ function SettingsTab() {
               className="block w-full text-sm text-gray-900 dark:text-white border border-light-border dark:border-dark-border rounded-lg cursor-pointer bg-light-elevated dark:bg-dark-elevated focus:outline-none"
             />
             <p className="mt-1 text-xs text-gray-500">
-              PDF files only. This will replace the current resume.pdf file.
+              PDF files only, up to 4 MB. This replaces your current resume.
             </p>
           </div>
           <button
@@ -1552,8 +1549,7 @@ function SettingsTab() {
               className="block w-full text-sm text-gray-900 dark:text-white border border-light-border dark:border-dark-border rounded-lg cursor-pointer bg-light-elevated dark:bg-dark-elevated focus:outline-none"
             />
             <p className="mt-1 text-xs text-gray-500">
-              JPG, PNG, or WebP. Square images work best. Will be named
-              profile.[ext]
+              JPG, PNG, or WebP, up to 4 MB. Square images work best.
             </p>
           </div>
           {imageFile && (

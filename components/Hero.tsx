@@ -284,7 +284,7 @@ export default function Hero() {
                   <div className="absolute inset-0 bg-gradient-to-br from-accent-cyan to-accent-purple rounded-full blur-2xl opacity-30" />
                   <div className="relative bg-white dark:bg-dark-elevated rounded-full p-2 border border-light-border dark:border-dark-border">
                     <img
-                      src="/ishaan-photo.jpg"
+                      src="/profile-photo"
                       alt="Ishaan Shaffir"
                       className="w-full rounded-full"
                     />

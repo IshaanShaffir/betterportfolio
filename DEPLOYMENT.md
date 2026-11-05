@@ -46,11 +46,13 @@
    EMAIL_SERVER_HOST=smtp.gmail.com
    EMAIL_SERVER_PORT=587
    EMAIL_SERVER_USER=ishaanshaffir@gmail.com
-   EMAIL_SERVER_PASSWORD=mfgn fqao unxb stpz
+   EMAIL_SERVER_PASSWORD=your-gmail-app-password
    EMAIL_FROM=ishaanshaffir@gmail.com
    ```
 
 6. Click **Deploy**
+
+7. Enable resume and photo uploads: in your Vercel project, go to **Storage**, create a **public** Blob store, and connect it to this project, then redeploy. For Docker or local development, set `BLOB_READ_WRITE_TOKEN` to the store's token.
 
 ### Step 3: Run Database Migration
 
