@@ -46,7 +46,7 @@
    EMAIL_SERVER_HOST=smtp.gmail.com
    EMAIL_SERVER_PORT=587
    EMAIL_SERVER_USER=ishaanshaffir@gmail.com
-   EMAIL_SERVER_PASSWORD=mfgn fqao unxb stpz
+   EMAIL_SERVER_PASSWORD=your-gmail-app-password
    EMAIL_FROM=ishaanshaffir@gmail.com
    ```
 
